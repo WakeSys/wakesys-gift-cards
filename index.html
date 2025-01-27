@@ -1,0 +1,191 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet">
+
+<style type="text/css">
+#gift_cards {
+	/*width: 1200px;*/
+	font-family: 'Roboto', sans-serif;
+}
+.gift_card {
+	width: 300px;
+	min-height: 450px;
+	float: left;
+	margin: 25px;
+	transition: transform 0.2s ease;
+}
+
+.gift_card:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.gift_card_image {
+	width: 100%;
+}
+.gift_card_image img{
+	width: 100%;
+	border-radius: 5px;
+}
+.gift_card_name {
+	position: absolute;
+	margin: -110px 0 0 0px;
+	background-color: #ffffff82;
+	padding: 10px 20px;
+	border-bottom-right-radius: 5px;
+	border-top-right-radius: 5px;
+}
+.gift_card_price {
+	position: absolute;
+	margin: -38px 0 0 0px;
+	background-color: #ffffff82;
+	padding: 10px 20px;
+	width: 260px;
+	text-align: center;
+	border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+}
+.gift_card_description {
+	padding: 10px 0;
+	text-align: justify;
+	font-size: 75%;
+}
+
+.gift_card_link {
+	background-color: #4A90E2;
+	text-align: center;
+	padding: 10px;
+	border-radius: 5px;
+	font-weight: bold;
+}
+
+.gift_card_link a{
+	color: #FFF;
+	text-decoration: none;
+	display: block;
+}
+
+.loading {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+}
+
+.loading::after {
+    content: '...';
+    animation: dots 1s steps(5, end) infinite;
+}
+
+@keyframes dots {
+    0%, 20% { content: '.'; }
+    40% { content: '..'; }
+    60% { content: '...'; }
+    80%, 100% { content: ''; }
+}
+</style>
+
+<script type="text/javascript">
+
+ 
+var sub_domain_of_your_wakesys_account = 'wakelake'; //use 'wakelake' to see the example work
+var gift_cards_information = [];
+var gift_cards_output = [];
+
+
+// Example configuration, based on wakelake:
+
+gift_cards_information[30] = [
+	"https://ws-fileshare.s3.amazonaws.com/background/gift_card/demo/1.png"
+	,'1 Hour Pass' //title
+	,'Gift card, for instance for a 1 Hour Pass on the full-size cable.' //description
+	,0 //order index >> order must start with 0, not with 1!
+]; 
+gift_cards_information[2] = [
+	'https://ws-fileshare.s3.amazonaws.com/background/gift_card/demo/2.png' //img_link
+	,'Value gift card' //title
+	,'Redeem your gift card online or in the shop, and decide yourself what you want to buy'
+	,2 //order index
+]; 
+gift_cards_information[1] = [
+	'https://ws-fileshare.s3.amazonaws.com/background/gift_card/demo/3.png' //img_link
+	,'2 Hour Pass' //title
+	,'Gift card, for instance for a 2 Hour Pass on the full-size cable.' //description
+	,3 //order index
+]; 
+gift_cards_information[28] = [
+	'https://ws-fileshare.s3.amazonaws.com/background/gift_card/demo/4.png' //img_link
+	,'Day Pass' //title
+	,'Gift card, for instance for a Day Pass on the full-size cable.' //description
+	,1 //order index
+]; 
+
+
+$(document).ready(function(){
+	$('#gift_cards').html('<div class="loading">Loading gift cards</div>');
+	$.ajax({
+		url: 'https://'+sub_domain_of_your_wakesys_account+'.wakesys.com/api/gift_cards.php',
+		type: "GET",
+		dataType: "jsonp",
+		crossDomain: true,
+		success: function (gift_cards) {
+			try {
+				$('#gift_cards').empty();
+				
+				console.log("response:", gift_cards);
+				for(var i=0, l=gift_cards.length; i<l; i++) {
+					var gift_card = gift_cards[i];
+					if (
+						typeof gift_cards_information[gift_card.master_ID_giftcard] !== 'undefined' 
+						&& gift_cards_information[gift_card.master_ID_giftcard].length > 0
+					) 
+					{
+						gift_card_image = gift_cards_information[gift_card.master_ID_giftcard][0];
+						gift_card_name = gift_cards_information[gift_card.master_ID_giftcard][1];
+						gift_card_description = gift_cards_information[gift_card.master_ID_giftcard][2];
+						sort_index = gift_cards_information[gift_card.master_ID_giftcard][3];
+					}
+					else
+					{
+						gift_card_image = 'https://ws-fileshare.s3.amazonaws.com/background/gift_card/demo/1.png';
+						gift_card_name = 'NAME not defined';
+						gift_card_description = 'DESCRIPTION not defined <br> (gift_card.master_ID_giftcard=' + gift_card.master_ID_giftcard + ')';
+						sort_index = 100 + i;
+					}
+					    output = 
+							'<div class="gift_card">' +
+								'<div class="gift_card_image">' +
+									'<img src="' + gift_card_image + '" onerror="this.src=\'default-placeholder.png\'">' +
+								'</div>' +
+								'<div class="gift_card_name">' + gift_card_name + '</div>' +
+								'<div class="gift_card_price">' + gift_card.price_gift_card + '€</div>' +
+								'<div class="gift_card_description">' + gift_card_description + '</div>' +
+								'<div class="gift_card_link">' + gift_card.link_to_purchase_giftcard + '</div>' +
+								'<br>' +
+								'<div class="gift_card_link">' +
+									'<a href="' + gift_card.link_to_purchase_giftcard + '">' + 
+										'Buy now' +
+									'</a>' +
+								'</div>' +
+							'</div>'
+						;
+						gift_cards_output[sort_index] = output;
+					
+					
+				}
+				for(var i=0, l=gift_cards_output.length; i<l; i++) {
+					$('#gift_cards').append(gift_cards_output[i]);
+				}
+			} catch(e) {
+				console.log(e);
+				$('#gift_cards').html('<div class="error">Error processing gift cards data.</div>');
+			}
+		},
+		error: function () {
+			$('#gift_cards').html('<div class="error">There was an error loading the data.</div>');
+		}
+	});
+});
+/* ]]> */
+</script>
+
+<div id="gift_cards"></div>
