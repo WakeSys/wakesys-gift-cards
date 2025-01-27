@@ -20,6 +20,21 @@ A simple widget to display and sell gift cards on your water park website. This 
 - Mobile-responsive design
 - Direct integration with Wakesys payment system
 
+## Dependencies
+
+- jQuery 3.7.1 (loaded from CDN)
+- Google Fonts - Roboto (400, 500, 700)
+- Modern web browser with JavaScript enabled
+
+The widget automatically loads these dependencies when you include the `index.html` file. No additional configuration is needed.
+
+## Browser Support
+
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
+
 ## Customization
 
 The widget generates placeholder elements for each gift card amount available through the API. You can customize the appearance of these elements by:
@@ -37,12 +52,21 @@ The widget automatically connects to your Wakesys account and fetches:
 
 No additional API configuration is required beyond setting your subdomain.
 
-## Configuration
+## Installation
 
-To configure your gift cards, you'll need to map each gift card to its display information. Follow these steps:
+1. Include the required dependencies in your HTML:
+   ```html
+   <!-- Required Dependencies -->
+   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+   <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet">
+   ```
 
-1. First, identify your gift card's `master_ID_giftcard` values. You can do this in two ways:
+2. Add the gift cards container to your HTML:
+   ```html
+   <div id="gift_cards"></div>
+   ```
 
+2. Configure each gift card using this format:
    Option A - Using the preview:
    - Open the page where you've installed the widget
    - For any unconfigured gift cards, you'll see "DESCRIPTION not defined (gift_card.master_ID_giftcard=XX)" in the description
@@ -53,7 +77,6 @@ To configure your gift cards, you'll need to map each gift card to its display i
    - Look for the API response array in the console
    - Note the `master_ID_giftcard` values for each gift card
 
-2. Configure each gift card using this format:
    ```javascript
    gift_cards_information[master_ID_giftcard] = [
        'image_url',      // URL to gift card image (300x300px recommended)
@@ -63,15 +86,33 @@ To configure your gift cards, you'll need to map each gift card to its display i
    ];
    ```
 
-3. Example configuration:
-   ```javascript
-   gift_cards_information[30] = [
-       "https://example.com/giftcard1.png",
-       "1 Hour Pass",
-       "Gift card for instance for a 1 Hour Pass on the full-size cable.",
-       0  // Will display first
-   ]; 
-   ```
+### Example Implementation
+
+```html
+<script>
+    /* GENERAL CONFIGURATION */
+    var sub_domain_of_your_wakesys_account = 'wakelake';
+
+    /* GIFT CARD CONFIGURATIONS */
+    var gift_cards_information = [];
+    
+    gift_cards_information[30] = [
+        "https://ws-fileshare.s3.amazonaws.com/background/gift_card/demo/1.png",
+        "1 Hour Pass",
+        "Gift card, for instance for a 1 Hour Pass on the full-size cable.",
+        0
+    ]; 
+
+    gift_cards_information[2] = [
+        "https://ws-fileshare.s3.amazonaws.com/background/gift_card/demo/2.png",
+        "Value gift card",
+        "Redeem your gift card online or in the shop",
+        1
+    ];
+</script>
+
+<div id="gift_cards"></div>
+```
 
 ### Configuration Tips
 - Images should be 300x300px for optimal display
@@ -111,6 +152,22 @@ When configuring your gift cards, always remember:
 4. **Legal Clarity**: Prevents misunderstandings about what the gift card represents
 
 Remember: When redeemed, all gift cards add their monetary value to the customer's prepaid account in Wakesys, regardless of their description or suggested use.
+
+## License
+
+GNU GPLv3
+
+Copyright (c) 2025 wakesys s.à.r.l.
+
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You must share any derivative works under the same license terms. All modifications and improvements must be made available publicly under the GNU GPLv3.
+
+Commercial use of this software is allowed, but the source code of any derivative works MUST be made freely available under the terms of the GNU GPLv3.
+
+You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 ## Support
 
