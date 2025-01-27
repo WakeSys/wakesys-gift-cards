@@ -59,6 +59,10 @@ No additional API configuration is required beyond setting your subdomain.
    <!-- Required Dependencies -->
    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet">
+   
+   <!-- Wakesys Gift Cards -->
+   <script src="https://cdn.jsdelivr.net/gh/wakesys/giftcards@1.0.0/wakesysgiftcards.js"></script>
+   <link href="https://cdn.jsdelivr.net/gh/wakesys/giftcards@1.0.0/wakesysgiftcards.css" rel="stylesheet">
    ```
 
 2. Add the gift cards container to your HTML:
