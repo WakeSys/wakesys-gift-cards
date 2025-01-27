@@ -2,16 +2,6 @@
 
 A simple widget to display and sell gift cards on your water park website. This widget connects to your Wakesys account to fetch real-time gift card data and pricing.
 
-## Quick Start
-
-1. Copy the contents of `index.html` into your webpage
-2. Replace the subdomain with your Wakesys account:
-   ```html
-   <script>
-     const WAKESYS_SUBDOMAIN = 'your-subdomain'; // Replace with your Wakesys subdomain
-   </script>
-   ```
-
 ## Features
 
 - Automatically generates gift card display elements for all available denominations
