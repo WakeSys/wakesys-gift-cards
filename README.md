@@ -61,13 +61,16 @@ No additional API configuration is required beyond setting your subdomain.
    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet">
    
    <!-- Wakesys Gift Cards -->
-   <script src="https://cdn.jsdelivr.net/gh/wakesys/giftcards@1.0.1/wakesysgiftcards.js"></script>
-   <link href="https://cdn.jsdelivr.net/gh/wakesys/giftcards@1.0.1/wakesysgiftcards.css" rel="stylesheet">
+   <script src="https://cdn.jsdelivr.net/gh/wakesys/wakesys-gift-cards@1.0.1/wakesysgiftcards.js"></script>
+   <link href="https://cdn.jsdelivr.net/gh/wakesys/wakesys-gift-cards@1.0.1/wakesysgiftcards.css" rel="stylesheet">
    ```
 
 2. Add the gift cards container to your HTML:
    ```html
    <div id="gift_cards"></div>
+   ```
+   ```javascript
+   var sub_domain_of_your_wakesys_account = 'wakelake'; //use 'wakelake' to see the example work
    ```
 
 2. Configure each gift card using this format:

@@ -1,4 +1,7 @@
 $(document).ready(function(){
+	var gift_cards_information = [];
+	var gift_cards_output = [];
+	
 	$('#gift_cards').html('<div class="loading">Loading gift cards</div>');
 	$.ajax({
 		url: 'https://'+sub_domain_of_your_wakesys_account+'.wakesys.com/api/gift_cards.php',
